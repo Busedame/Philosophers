@@ -1,0 +1,2 @@
+Mutexes are not getting initialized properly. Fix this before
+moving on.

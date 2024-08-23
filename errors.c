@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/21 19:33:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/23 16:56:11 by nholbroo         ###   ########.fr       */
+/*   Created: 2024/08/23 15:53:40 by nholbroo          #+#    #+#             */
+/*   Updated: 2024/08/23 15:56:42 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char *argv[])
+int		init_errors(t_main *main, int error_code)
 {
-	t_main	main;
-	t_args	args;
-
-	if (argc < 5 || argc > 6)
-		return (init_errors(NULL, 1));
-	if (init_args(argc, argv, &args))
-		return (init_errors(NULL, 2));
-	if (init_struct(&main, &args))
-		return (init_errors(&main, 3));
-	if (philosophers(&main, &args))
-		return (4);
-	free_main_struct(&main);
-	return (0);
+	if (error_code == 1)
+		ft_putstr_fd(USAGE_ERR, 2);
+	if (error_code == 2)
+		ft_putstr_fd(INPUT_ERR, 2);
+	if (error_code == 3)
+		ft_putstr_fd(INIT_ERR, 2);
+	free_main_struct(main);
+	return (error_code);
 }
