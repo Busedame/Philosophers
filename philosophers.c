@@ -47,6 +47,9 @@ int	sleep_routine(t_philo *philo)
 		return (1);
 	print_message(philo, "is sleeping");
 	usleep(philo->args->t_to_sleep * 1000);
+	if (death(philo))
+		return (1);
+	return (0);
 }
 
 int	eat_routine(t_philo *philo)
@@ -63,19 +66,25 @@ int	eat_routine(t_philo *philo)
 	else
 		pthread_mutex_lock(&philo->mutex->fork[philo->forks[0]]);
 	print_message(philo, "has taken a fork");
+	pthread_mutex_lock(&philo->mutex->eating);
 	print_message(philo, "is eating");
+	pthread_mutex_ulock(&philo->mutex->eating);
 	timestamp_for_meal(philo);
+	usleep(philo->args->t_to_eat * 1000);
 	pthread_mutex_unlock(&philo->mutex->fork[philo->forks[0]]);
 	pthread_mutex_unlock(&philo->mutex->fork[philo->forks[1]]);
+	if (death(philo))
+		return (1);
+	return (0);
 }
 
 int	think_routine(t_philo *philo)
 {
 	if (!death(philo))
-	{
-		usleep(philo->args->t_to_sleep);
 		print_message(philo, "is thinking");
-	}
+	if (death(philo))
+		return (1);
+	return (0);
 }
 
 void	*routine(void *ptr)
@@ -98,9 +107,12 @@ void	*routine(void *ptr)
 			print_death(philo);
 			break ;
 		}
-		eat_routine(philo);
-		sleep_routine(philo);
-		think_routine(philo);
+		if (eat_routine(philo))
+			break ;
+		if (sleep_routine(philo))
+			break ;
+		if (think_routine(philo))
+			break ;
 		i++;
 		if (philo->args->opt_arg && i == philo->args->amt_eat)
 			break ;

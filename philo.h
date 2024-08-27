@@ -50,6 +50,7 @@ typedef struct s_mutex
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	print;
 	pthread_mutex_t	status;
+	pthread_mutex_t	eating;
 }	t_mutex;
 
 typedef struct s_philo
@@ -74,7 +75,6 @@ typedef struct s_main
 
 // Standard functions:
 int		ft_atoi(const char *nptr);
-char	*ft_itoa(int n);
 void	ft_putstr_fd(char *s, int fd);
 size_t	ft_strlen(const char *s);
 
@@ -88,6 +88,9 @@ long	time_elapsed_since_last_meal(t_philo *philo);
 long	time_elapsed_since_start(t_philo *philo);
 int		timestamp_for_meal(t_philo *philo);
 long	get_current_time(t_philo *philo);
+
+// Printing:
+void	print_death(t_philo *philo);
 
 // Philosophers:
 int		philosophers(t_main *main, t_args *args);
