@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:32:39 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/26 18:45:56 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:33:31 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ int		init_struct(t_main *main, t_args *args);
 
 // Time:
 int		init_time(t_main *main);
-int		time_elapsed_since_last_meal(t_philo *philo);
+long	time_elapsed_since_last_meal(t_philo *philo);
 int		timestamp_for_meal(t_philo *philo);
+long	get_current_time(t_philo *philo);
 
 // Philosophers:
 int		philosophers(t_main *main, t_args *args);
