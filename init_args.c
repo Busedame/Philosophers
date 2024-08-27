@@ -40,6 +40,7 @@ int	init_args(int argc, char **argv, t_args *args)
 	args->t_to_die = ft_atoi(argv[2]);
 	args->t_to_eat = ft_atoi(argv[3]);
 	args->t_to_sleep = ft_atoi(argv[4]);
+	args->someone_died = 0;
 	if (argc == 6)
 	{
 		args->amt_eat = ft_atoi(argv[5]);

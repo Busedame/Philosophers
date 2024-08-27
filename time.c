@@ -22,6 +22,15 @@ int	init_time(t_main *main)
 	return (0);
 }
 
+long	get_current_time(t_philo *philo)
+{
+	struct timeval	tv;
+
+	if (gettimeofday(&tv, NULL) != 0)
+		return (-1);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
+
 int	timestamp_for_meal(t_philo *philo)
 {
 	struct timeval	tv;
@@ -45,11 +54,15 @@ long	time_elapsed_since_last_meal(t_philo *philo)
 	return (elapsed_time);
 }
 
-long	get_current_time(t_philo *philo)
+long	time_elapsed_since_start(t_philo *philo)
 {
 	struct timeval	tv;
+	long			current_time;
+	long			elapsed_time;
 
 	if (gettimeofday(&tv, NULL) != 0)
 		return (-1);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	current_time = (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	elapsed_time = current_time - philo->start_time;
+	return (elapsed_time);
 }

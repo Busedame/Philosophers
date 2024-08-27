@@ -42,12 +42,14 @@ typedef struct s_args
 	int		t_to_sleep;
 	int		amt_eat;
 	bool	opt_arg;
+	bool	someone_died;
 }	t_args;
 
 typedef struct s_mutex
 {
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	print;
+	pthread_mutex_t	status;
 }	t_mutex;
 
 typedef struct s_philo
@@ -56,6 +58,7 @@ typedef struct s_philo
 	int				no_philo;
 	unsigned int	forks[2];
 	long			start_time;
+	long			current_time;
 	long			last_eaten;
 	t_mutex			*mutex;
 	t_args			*args;
@@ -82,6 +85,7 @@ int		init_struct(t_main *main, t_args *args);
 // Time:
 int		init_time(t_main *main);
 long	time_elapsed_since_last_meal(t_philo *philo);
+long	time_elapsed_since_start(t_philo *philo);
 int		timestamp_for_meal(t_philo *philo);
 long	get_current_time(t_philo *philo);
 

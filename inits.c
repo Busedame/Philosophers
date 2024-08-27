@@ -25,6 +25,7 @@ static int	init_mutex(t_main *main, t_args *args)
 	if (!main->mutex->fork)
 		return (1);
 	pthread_mutex_init(&main->mutex->print, NULL);
+	pthread_mutex_init(&main->mutex->status, NULL);
 	while (i <= args->tot_phil)
 	{
 		if (pthread_mutex_init(&main->mutex->fork[i], NULL) != 0)
