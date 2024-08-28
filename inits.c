@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:13:01 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/26 18:30:35 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:15:43 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	init_mutex(t_main *main, t_args *args)
 	pthread_mutex_init(&main->mutex->print, NULL);
 	pthread_mutex_init(&main->mutex->status, NULL);
 	pthread_mutex_init(&main->mutex->eating, NULL);
+	pthread_mutex_init(&main->mutex->start, NULL);
 	while (i <= args->tot_phil)
 	{
 		if (pthread_mutex_init(&main->mutex->fork[i], NULL) != 0)

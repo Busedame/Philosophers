@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:32:39 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/27 14:33:31 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:42:30 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_args
 	int		amt_eat;
 	bool	opt_arg;
 	bool	someone_died;
+	int		start;
 }	t_args;
 
 typedef struct s_mutex
@@ -51,6 +52,7 @@ typedef struct s_mutex
 	pthread_mutex_t	print;
 	pthread_mutex_t	status;
 	pthread_mutex_t	eating;
+	pthread_mutex_t	start;
 }	t_mutex;
 
 typedef struct s_philo
@@ -71,6 +73,12 @@ typedef struct s_main
 	t_mutex			*mutex;
 	long			start_time;
 }	t_main;
+
+typedef struct s_monitor
+{
+	pthread_t	*monitor;
+	t_main		*main;
+}	t_monitor;
 
 
 // Standard functions:

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:44:51 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/23 15:58:21 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:43:01 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	init_args(int argc, char **argv, t_args *args)
 	args->t_to_eat = ft_atoi(argv[3]);
 	args->t_to_sleep = ft_atoi(argv[4]);
 	args->someone_died = 0;
+	args->start = 0;
 	if (argc == 6)
 	{
 		args->amt_eat = ft_atoi(argv[5]);

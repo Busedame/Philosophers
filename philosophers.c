@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 13:55:38 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/27 15:15:49 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:44:42 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,22 @@ int	eat_routine(t_philo *philo)
 {
 	if (death(philo))
 		return (1);
-	if (philo->no_philo % 2)
+	if (philo->forks[0] < philo->forks[1])
+	{
 		pthread_mutex_lock(&philo->mutex->fork[philo->forks[0]]);
-	else
+		print_message(philo, "picked up a fork");
 		pthread_mutex_lock(&philo->mutex->fork[philo->forks[1]]);
-	print_message(philo, "has taken a fork");
-	if (philo->no_philo % 2)
+	}
+	else if (philo->forks[0] > philo->forks[1])
+	{
 		pthread_mutex_lock(&philo->mutex->fork[philo->forks[1]]);
-	else
+		print_message(philo, "picked up a fork");
 		pthread_mutex_lock(&philo->mutex->fork[philo->forks[0]]);
-	print_message(philo, "has taken a fork");
+	}
+	print_message(philo, "picked up a fork");
 	pthread_mutex_lock(&philo->mutex->eating);
 	print_message(philo, "is eating");
-	pthread_mutex_ulock(&philo->mutex->eating);
+	pthread_mutex_unlock(&philo->mutex->eating);
 	timestamp_for_meal(philo);
 	usleep(philo->args->t_to_eat * 1000);
 	pthread_mutex_unlock(&philo->mutex->fork[philo->forks[0]]);
@@ -80,14 +83,30 @@ int	eat_routine(t_philo *philo)
 
 int	think_routine(t_philo *philo)
 {
-	if (!death(philo))
-		print_message(philo, "is thinking");
+	print_message(philo, "is thinking");
 	if (death(philo))
 		return (1);
 	return (0);
 }
 
-void	*routine(void *ptr)
+void	wait_for_all(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->mutex->start);
+	philo->args->start++;
+	pthread_mutex_unlock(&philo->mutex->start);
+	while (1)
+	{
+		pthread_mutex_lock(&philo->mutex->start);
+		if (philo->args->start == philo->args->tot_phil)
+		{
+			pthread_mutex_unlock(&philo->mutex->start);
+			return ;
+		}
+		pthread_mutex_unlock(&philo->mutex->start);
+	}
+}
+
+void	*philo_routine(void *ptr)
 {
 	t_philo	*philo;
 	int		i;
@@ -95,18 +114,13 @@ void	*routine(void *ptr)
 	philo = (t_philo *)ptr;
 	philo->last_eaten = philo->start_time;
 	i = 0;
+	wait_for_all(philo);
 	while (1)
 	{
+		if (philo->args->opt_arg && i == philo->args->amt_eat)
+			break ;
 		if (death(philo))
 			break ;
-		if (time_elapsed_since_last_meal(philo) > philo->args->t_to_die)
-		{
-			pthread_mutex_lock(&philo->mutex->status);
-			philo->args->someone_died = 1;
-			pthread_mutex_unlock(&philo->mutex->status);
-			print_death(philo);
-			break ;
-		}
 		if (eat_routine(philo))
 			break ;
 		if (sleep_routine(philo))
@@ -114,24 +128,69 @@ void	*routine(void *ptr)
 		if (think_routine(philo))
 			break ;
 		i++;
-		if (philo->args->opt_arg && i == philo->args->amt_eat)
-			break ;
 	}
 	return (NULL);
 }
 
+void	*monitor_routine(void *ptr)
+{
+	int			i;
+	t_monitor	*monitor;
+
+	monitor = (t_monitor *)ptr;
+	usleep(1000);
+	while (1)
+	{
+		i = 0;
+		while (monitor->main->philo[i])
+		{
+			if (time_elapsed_since_last_meal(monitor->main->philo[i]) > \
+				monitor->main->philo[i]->args->t_to_die)
+			{
+				pthread_mutex_lock(&monitor->main->mutex->status);
+				monitor->main->philo[i]->args->someone_died = 1;
+				pthread_mutex_unlock(&monitor->main->mutex->status);
+				print_death(monitor->main->philo[i]);
+				return (NULL);
+			}
+			i++;
+		}
+	}
+	return (NULL);
+}
+
+t_monitor	*init_monitor(t_main *main, t_monitor *monitor)
+{
+	monitor = malloc(sizeof(t_monitor));
+	if (!monitor)
+		return (NULL);
+	monitor->main = main;
+	monitor->monitor = malloc(sizeof(pthread_t));
+	if (!monitor->monitor)
+	{
+		free(monitor);
+		return (NULL);
+	}
+	return (monitor);
+}
+
 int	philosophers(t_main *main, t_args *args)
 {
-	int	i;
+	t_monitor	*monitor;
+	int			i;
 
 	i = 0;
+	monitor = NULL;
+	monitor = init_monitor(main, monitor);
 	while (i < args->tot_phil)
 	{
-		if (pthread_create(main->philo[i]->philo, NULL, &routine, \
+		if (pthread_create(main->philo[i]->philo, NULL, &philo_routine, \
 		main->philo[i]) != 0)
 			return (1);
 		i++;
 	}
+	pthread_create(monitor->monitor, NULL, &monitor_routine, monitor);
+	pthread_join(*monitor->monitor, NULL);
 	i = 0;
 	while (i < args->tot_phil)
 	{
@@ -139,5 +198,7 @@ int	philosophers(t_main *main, t_args *args)
 			return (2);
 		i++;
 	}
+	free(monitor->monitor);
+	free(monitor);
 	return (0);
 }
