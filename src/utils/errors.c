@@ -6,12 +6,14 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 15:53:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/20 10:59:37 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:26:16 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*Will print an error if it happens during the simulation.
+The error codes are defined in the header-file "philo.h"*/
 int	errors(t_main *main, int error_code)
 {
 	ft_putstr_fd(BOLD, 2);
@@ -30,6 +32,8 @@ int	errors(t_main *main, int error_code)
 	return (error_code);
 }
 
+/*Will print an error if it occurs during initialization of the program.
+The error codes are defined in the header-file "philo.h"*/
 int	init_errors(t_main *main, int error_code)
 {
 	ft_putstr_fd(BOLD, 2);

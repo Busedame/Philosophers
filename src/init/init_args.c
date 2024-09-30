@@ -6,12 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:44:51 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/30 14:40:33 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:06:41 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*Checks if all the program arguments are numerical.*/
 static int	check_args(int argc, char **argv)
 {
 	int	i;
@@ -32,6 +33,8 @@ static int	check_args(int argc, char **argv)
 	return (0);
 }
 
+/*Checks if arguments are valid, stores the program arguments in the
+t_args struct, plus initializes all the other members of the struct to 0.*/
 int	init_args(int argc, char **argv, t_args *args)
 {
 	if (check_args(argc, argv))

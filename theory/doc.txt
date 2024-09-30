@@ -1,7 +1,0 @@
--> Make a check to make sure that they can't wait with one fork if they
-can't access both. A boolean for locked/unlocked.
--> Make a monitoring thread to check if anyone died. In that case block
-the printing function for the philosophers.
--> Synchronize all threads to start at the same time.
-
-valgrind --tool=helgrind

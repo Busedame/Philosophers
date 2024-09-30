@@ -1,2 +1,0 @@
-If an even number of philosophers:
-<total_

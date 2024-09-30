@@ -6,12 +6,15 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 13:17:24 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/30 14:48:20 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:28:27 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*Destroys the mutexes and the pointers to them.
+The mutexes created are two arrays, and the rest are single mutexes.
+The mutexes must be destroyed, and the pointers to them are getting freed.*/
 static void	free_mutexes(t_main *main)
 {
 	int	i;
@@ -40,6 +43,8 @@ static void	free_mutexes(t_main *main)
 	}
 }
 
+/*Destroys and frees mutexes, and frees all allocated memory of the main
+struct.*/
 void	free_main_struct(t_main *main)
 {
 	int	i;
@@ -62,6 +67,7 @@ void	free_main_struct(t_main *main)
 	}
 }
 
+/*Frees all allocated memory of the monitor struct.*/
 int	free_monitor(t_monitor *monitor, bool error)
 {
 	if (monitor)

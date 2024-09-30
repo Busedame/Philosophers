@@ -6,12 +6,19 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:26:07 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/20 12:03:07 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:35:21 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*Creds to Oceano for teaching me about getters and setters. It is a super
+good way to create more general functions that will be applicable to 
+a wide range of actions.*/
+
+/*Safely gets the current value of a bool.
+@param mutex The mutex protecting the bool.
+@param status A pointer to the current value of a bool.*/
 bool	get_bool(pthread_mutex_t *mutex, bool *status)
 {
 	mutex_action(mutex, LOCK);
@@ -27,6 +34,10 @@ bool	get_bool(pthread_mutex_t *mutex, bool *status)
 	}
 }
 
+/*Safely updates the value of a bool.
+@param mutex The mutex protecting the bool.
+@param status A pointer to the current value of a bool.
+@param new_status The new value of the bool.*/
 void	set_bool(pthread_mutex_t *mutex, bool *status, bool new_status)
 {
 	mutex_action(mutex, LOCK);
@@ -34,6 +45,11 @@ void	set_bool(pthread_mutex_t *mutex, bool *status, bool new_status)
 	mutex_action(mutex, UNLOCK);
 }
 
+/*Safely gets the current value of a long.
+@param mutex The mutex protecting the long.
+@param value The value of the long.
+@param ret_value Stores the value of the long. A separate variable to be
+able to safely return it without leaving the mutex unlocked.*/
 long	get_long(pthread_mutex_t *mutex, long value)
 {
 	long	ret_value;
@@ -44,6 +60,10 @@ long	get_long(pthread_mutex_t *mutex, long value)
 	return (ret_value);
 }
 
+/*Safely updates the value of a long.
+@param mutex The mutex protecting the long.
+@param value A pointer to the current value of a long.
+@param new_value The new value of the long.*/
 void	set_long(pthread_mutex_t *mutex, long *value, long new_value)
 {
 	mutex_action(mutex, LOCK);
@@ -51,6 +71,9 @@ void	set_long(pthread_mutex_t *mutex, long *value, long new_value)
 	mutex_action(mutex, UNLOCK);
 }
 
+/*Safely increments the value of a long by 1.
+@param mutex The mutex protecting the long.
+@param value A pointer to the current value of a long.*/
 void	add_one_to_long(pthread_mutex_t *mutex, long *value)
 {
 	mutex_action(mutex, LOCK);

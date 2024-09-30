@@ -1,17 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mutexes.c                                          :+:      :+:    :+:   */
+/*   mutex_action.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:44:38 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/19 14:45:24 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:36:28 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*Locks, unlocks, initializes or destroys a mutex - depending on what is 
+specified by the variable action. The different values of action are
+defined in "philo.h"*/
 int	mutex_action(pthread_mutex_t *mutex, int action)
 {
 	if (action == LOCK)

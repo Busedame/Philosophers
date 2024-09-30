@@ -6,12 +6,16 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:00:32 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/20 13:01:24 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:05:14 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*Creates, runs and joins all the philosopher threads + the monitor thread.
+Returns 1 if something went wrong with thread creation/joining or memory
+allocation.
+Returns 0 upon success.*/
 int	simulation(t_main *main, t_args *args)
 {
 	t_monitor	*monitor;

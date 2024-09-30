@@ -6,12 +6,14 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:13:01 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/30 14:57:04 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:39:52 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*Initializes all the mutexes.
+Allocates memory for the mutex arrays (forks and philos).*/
 static int	init_mutex(t_main *main, t_args *args)
 {
 	int	i;
@@ -39,6 +41,7 @@ static int	init_mutex(t_main *main, t_args *args)
 	return (0);
 }
 
+/*Initializes the array of t_philo structs, and calls init_mutex.*/
 static int	first_init(t_main *main, t_args *args)
 {
 	main->philo = malloc(sizeof(t_philo *) * (args->tot_phil + 1));
@@ -49,6 +52,19 @@ static int	first_init(t_main *main, t_args *args)
 	return (0);
 }
 
+/*
+Each philosopher holds a fork with number <no_philo> in their left hand,
+and a fork with number <no_philo - 1> in their right hand.
+Except for if the current philosopher is 1 -> then the fork in their right hand
+is <tot_phil>.
+Example with 3 philosophers:
+- Philosopher 1 has fork 3 in their right hand and fork 1 in their left hand.
+- Philosopher 2 has fork 1 in their right hand and fork 2 in their left hand.
+- Philosopher 3 has fork 2 in their right hand and fork 3 in their left hand.
+@param no_philo The number of the current philosopher.
+@param tot_philo The total amount of philosophers.
+@param forks[1] Right hand.
+@param forks[0] Left hand.*/
 static void	init_forks(t_main *main, t_args *args, int i)
 {
 	if (main->philo[i]->no_philo == 1)
@@ -58,6 +74,7 @@ static void	init_forks(t_main *main, t_args *args, int i)
 	main->philo[i]->forks[0] = main->philo[i]->no_philo;
 }
 
+/*Initializes certain t_philo struct members to 0.*/
 static void	set_struct_members_to_zero(t_philo **philo)
 {
 	(*philo)->last_eaten = 0;
@@ -66,6 +83,12 @@ static void	set_struct_members_to_zero(t_philo **philo)
 	(*philo)->current_time = 0;
 }
 
+/*Initializes the main struct.
+It contains:
+- Initialzation of each separate philosopher struct with its respective
+values (no_philo, pointer to mutexes, pointer to t_args struct, etc.)
+- Mutex initializations.
+- Fork assignations.*/
 int	init_struct(t_main *main, t_args *args)
 {
 	int	i;

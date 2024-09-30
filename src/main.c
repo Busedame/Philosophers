@@ -6,12 +6,17 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:33:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/20 13:01:32 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:24:45 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*First parsing the input and will exit upon invalid input.
+Initializing the args-struct with shared data
+across threads, and initializing the main-struct which will be one per
+philosopher.
+Then starts the simulation, before it frees all memory.*/
 int	main(int argc, char *argv[])
 {
 	t_main	main;

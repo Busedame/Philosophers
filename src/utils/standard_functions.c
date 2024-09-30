@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atol.c                                          :+:      :+:    :+:   */
+/*   standard_functions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 13:35:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/20 10:54:05 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:29:34 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*Converts ascii-values (a string) to a long.*/
 long	ft_atol(const char *nptr)
 {
 	int			i;
@@ -39,6 +40,8 @@ long	ft_atol(const char *nptr)
 	return (result * sign);
 }
 
+/*Writes to a file descriptor as defined by fd. Mainly used for writing to
+standard error (2).*/
 void	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
