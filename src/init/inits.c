@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:13:01 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/30 14:47:46 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:57:04 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static int	init_mutex(t_main *main, t_args *args)
 	if (!main->mutex->fork)
 		return (1);
 	mutex_action(&main->mutex->print, INIT);
-	mutex_action(&main->mutex->print_death, INIT);
 	mutex_action(&main->mutex->status, INIT);
 	mutex_action(&main->mutex->eating, INIT);
 	mutex_action(&main->mutex->start, INIT);
