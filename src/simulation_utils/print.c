@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:31:27 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/30 13:54:41 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:55:31 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,21 @@
 
 void	print_message(t_philo *philo, char *message)
 {
-	philo->current_time = time_elapsed_since_start(philo);
+	long	current_time;
+
+	current_time = time_elapsed_since_start(philo);
 	mutex_action(&philo->mutex->print, LOCK);
 	if (!philo_is_dead(philo))
-		printf("%ld %d %s\n", philo->current_time, philo->no_philo, message);
+		printf("%ld %d %s\n", current_time, philo->no_philo, message);
 	mutex_action(&philo->mutex->print, UNLOCK);
 }
 
 void	print_death(t_philo *philo)
 {
-	philo->current_time = time_elapsed_since_start(philo);
+	long	current_time;
+
+	current_time = time_elapsed_since_start(philo);
 	mutex_action(&philo->mutex->print, LOCK);
-	printf("%ld %d %s\n", philo->current_time, philo->no_philo, "died");
+	printf("%ld %d %s\n", current_time, philo->no_philo, "died");
 	mutex_action(&philo->mutex->print, UNLOCK);
 }
