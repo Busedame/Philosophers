@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 13:55:38 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/20 13:59:08 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:26:46 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,8 @@ static void	*lonely_philo(t_philo *philo)
 
 int	sleep_routine(t_philo *philo)
 {
-	if (philo_is_dead(philo))
-		return (1);
 	print_message(philo, "is sleeping");
 	usleep(philo->args->t_to_sleep * 1000);
-	if (philo_is_dead(philo))
-		return (1);
 	return (0);
 }
 
@@ -54,7 +50,7 @@ int	eat_routine(t_philo *philo)
 	&philo->meals_eaten);
 	mutex_action(&philo->mutex->fork[philo->forks[0]], UNLOCK);
 	mutex_action(&philo->mutex->fork[philo->forks[1]], UNLOCK);
-	if (philo_is_dead(philo))
+	if (is_philo_full(philo))
 		return (1);
 	return (0);
 }
@@ -62,8 +58,6 @@ int	eat_routine(t_philo *philo)
 int	think_routine(t_philo *philo)
 {
 	print_message(philo, "is thinking");
-	if (philo_is_dead(philo))
-		return (1);
 	mutex_action(&philo->mutex->philo[philo->no_philo - 1], LOCK);
 	if (philo->no_philo % 2 != 0)
 		usleep(500);
@@ -74,16 +68,18 @@ int	think_routine(t_philo *philo)
 void	*philo_routine(void *ptr)
 {
 	t_philo	*philo;
+	bool	end_simulation;
 
 	philo = (t_philo *)ptr;
+	end_simulation = false;
 	set_long((&philo->mutex->philo[philo->no_philo - 1]), \
 	&philo->last_eaten, philo->start_time);
 	if (philo->args->tot_phil == 1)
 		return (lonely_philo(philo));
-	while (!philo_is_dead(philo) && !is_philo_full(philo))
+	while (!end_simulation && !philo_is_dead(philo))
 	{
 		if (eat_routine(philo))
-			break ;
+			end_simulation = true;
 		if (sleep_routine(philo))
 			break ;
 		if (think_routine(philo))
