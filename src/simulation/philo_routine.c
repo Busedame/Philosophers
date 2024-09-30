@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 13:55:38 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/30 17:05:55 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:37:51 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	think_routine(t_philo *philo)
 	return (0);
 }
 
-/*The philosopher threads routine.
+/*The philosopher threads' routine.
 Before while-loop:
 - Sets the last_eaten variable to the start_time of the program.
 - If there is only one philosopher, it has its own routine.

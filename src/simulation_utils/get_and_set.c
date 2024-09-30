@@ -6,13 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:26:07 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/30 15:35:21 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:43:12 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/*Creds to Oceano for teaching me about getters and setters. It is a super
+/*Creds to Oceano for teaching me about getters and setters!! It is a super
 good way to create more general functions that will be applicable to 
 a wide range of actions.*/
 
