@@ -6,11 +6,26 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:01:58 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/30 16:00:58 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/10/01 13:30:34 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+/*First gets the start time. Then starts a while loop taking the start time - 
+the current time, as long as it is less than the total duration. Any time
+this is true, it sleeps for total duration divided by 100, in order to keep
+round numbers. A calculation to get the time stamps correct, because the
+usleep function is a bit inaccurate. Also uses a duration that is calculated
+in relation to sleep, eat and die time.*/
+void	do_action(long duration)
+{
+	long	timestamp;
+
+	timestamp = get_current_time();
+	while (get_current_time() - timestamp < duration)
+		usleep(duration / 100);
+}
 
 /*Checks if any philosopher died. The someone_died bool is set by the
 monitor thread.*/

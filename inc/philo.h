@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:32:39 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/30 17:38:06 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/10/01 13:14:01 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_args
 	long	t_to_die;
 	long	t_to_eat;
 	long	t_to_sleep;
+	long	t_to_think;
 	long	max_eat;
 	bool	opt_arg;
 	bool	someone_died;
@@ -123,6 +124,7 @@ void		print_death(t_philo *philo);
 int			simulation(t_main *main, t_args *args);
 void		*philo_routine(void *ptr);
 void		*monitor_routine(void *ptr);
+void		do_action(long duration);
 int			is_philo_full(t_philo *philo);
 int			philo_is_dead(t_philo *philo);
 void		print_message(t_philo *philo, char *message);

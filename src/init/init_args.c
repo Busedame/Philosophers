@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:44:51 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/09/30 16:06:41 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/10/01 13:22:31 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	init_args(int argc, char **argv, t_args *args)
 	args->max_eat = 0;
 	args->opt_arg = false;
 	args->all_philos_full = false;
+	args->t_to_think = (args->t_to_die - args->t_to_eat - args->t_to_sleep) / 2;
 	if (argc == 6)
 	{
 		args->max_eat = ft_atol(argv[5]);
