@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 13:55:38 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/10/01 13:28:12 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/10/02 15:46:43 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ else that could potentially happen.*/
 static void	*lonely_philo(t_philo *philo)
 {
 	print_message(philo, "picked up a fork");
-	usleep(philo->args->t_to_die * 1000);
+	super_duper_usleep(philo->args->t_to_die * 1000);
 	print_death(philo);
 	return (NULL);
 }
@@ -29,7 +29,7 @@ Calls the usleep-function to sleep for the specified time.*/
 int	sleep_routine(t_philo *philo)
 {
 	print_message(philo, "is sleeping");
-	do_action(philo->args->t_to_sleep);
+	super_duper_usleep(philo->args->t_to_sleep);
 	return (0);
 }
 
@@ -61,7 +61,7 @@ int	eat_routine(t_philo *philo)
 	print_message(philo, "is eating");
 	mutex_action(&philo->mutex->eating, UNLOCK);
 	timestamp_for_meal(philo);
-	do_action(philo->args->t_to_eat);
+	super_duper_usleep(philo->args->t_to_eat);
 	add_one_to_long(&philo->mutex->philo[philo->no_philo - 1], \
 	&philo->meals_eaten);
 	mutex_action(&philo->mutex->fork[philo->forks[0]], UNLOCK);
@@ -77,7 +77,7 @@ better synchronization. This way the fight for forks will be decreased.*/
 int	think_routine(t_philo *philo)
 {
 	print_message(philo, "is thinking");
-	do_action(philo->args->t_to_think);
+	super_duper_usleep(philo->args->t_to_think);
 	return (0);
 }
 
@@ -101,7 +101,7 @@ void	*philo_routine(void *ptr)
 	if (philo->args->tot_phil == 1)
 		return (lonely_philo(philo));
 	if (philo->no_philo % 2 == 0)
-		do_action(philo->args->t_to_think);
+		super_duper_usleep(philo->args->t_to_think);
 	while (!end_simulation && !philo_is_dead(philo))
 	{
 		if (eat_routine(philo))
