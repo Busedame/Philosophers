@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 13:55:38 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/10/08 13:59:38 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:10:59 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ that the philosopher died. It is hardcoded, but there is also nothing
 else that could potentially happen.*/
 static void	*lonely_philo(t_philo *philo)
 {
-	print_message(philo, "picked up a fork");
+	print_message(philo, "has taken a fork");
 	super_duper_usleep(philo->args->t_to_die);
 	print_death(philo);
 	return (NULL);
@@ -47,16 +47,16 @@ int	eat_routine(t_philo *philo)
 	if (philo->no_philo % 2 != 0)
 	{
 		mutex_action(&philo->mutex->fork[philo->forks[0]], LOCK);
-		print_message(philo, "picked up a fork");
+		print_message(philo, "has taken a fork");
 		mutex_action(&philo->mutex->fork[philo->forks[1]], LOCK);
 	}
 	else
 	{
 		mutex_action(&philo->mutex->fork[philo->forks[1]], LOCK);
-		print_message(philo, "picked up a fork");
+		print_message(philo, "has taken a fork");
 		mutex_action(&philo->mutex->fork[philo->forks[0]], LOCK);
 	}
-	print_message(philo, "picked up a fork");
+	print_message(philo, "has taken a fork");
 	mutex_action(&philo->mutex->eating, LOCK);
 	print_message(philo, "is eating");
 	mutex_action(&philo->mutex->eating, UNLOCK);

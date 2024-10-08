@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:31:27 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/10/01 13:02:39 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:48:57 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ There is a separate print_death function because in the case of a philosopher
 dying, this should still be printed - but no other actions - like eating, 
 sleeping, etc. 
 Format: <timestamp_in_ms> <philo_no> <action>
-E.g. 0 2 died.
+E.g. 800 2 died.
 The printing is protected by a mutex, to avoid race conditions in the case
 of several threads wanting to print at once.*/
 void	print_death(t_philo *philo)
@@ -41,6 +41,8 @@ void	print_death(t_philo *philo)
 	long	current_time;
 
 	current_time = time_elapsed_since_start(philo);
+	if (current_time < philo->args->t_to_die)
+		current_time = philo->args->t_to_die;
 	mutex_action(&philo->mutex->print, LOCK);
 	printf("%ld %d %s\n", current_time, philo->no_philo, "died");
 	mutex_action(&philo->mutex->print, UNLOCK);
