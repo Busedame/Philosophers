@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 13:55:38 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/10/02 15:46:43 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/10/08 13:59:38 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ else that could potentially happen.*/
 static void	*lonely_philo(t_philo *philo)
 {
 	print_message(philo, "picked up a fork");
-	super_duper_usleep(philo->args->t_to_die * 1000);
+	super_duper_usleep(philo->args->t_to_die);
 	print_death(philo);
 	return (NULL);
 }
@@ -66,8 +66,6 @@ int	eat_routine(t_philo *philo)
 	&philo->meals_eaten);
 	mutex_action(&philo->mutex->fork[philo->forks[0]], UNLOCK);
 	mutex_action(&philo->mutex->fork[philo->forks[1]], UNLOCK);
-	if (is_philo_full(philo))
-		return (1);
 	return (0);
 }
 
@@ -92,20 +90,18 @@ specified time intervals.
 void	*philo_routine(void *ptr)
 {
 	t_philo	*philo;
-	bool	end_simulation;
 
 	philo = (t_philo *)ptr;
-	end_simulation = false;
 	set_long((&philo->mutex->philo[philo->no_philo - 1]), \
 	&philo->last_eaten, philo->start_time);
 	if (philo->args->tot_phil == 1)
 		return (lonely_philo(philo));
 	if (philo->no_philo % 2 == 0)
 		super_duper_usleep(philo->args->t_to_think);
-	while (!end_simulation && !philo_is_dead(philo))
+	while (!is_philo_full(philo) && !philo_is_dead(philo))
 	{
 		if (eat_routine(philo))
-			end_simulation = true;
+			break ;
 		if (sleep_routine(philo))
 			break ;
 		if (think_routine(philo))

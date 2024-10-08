@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:30:49 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/10/02 15:46:14 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/10/08 13:58:33 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,11 @@ void	*monitor_routine(void *ptr)
 		i = 0;
 		while (monitor->main->philo[i])
 		{
-			super_duper_usleep(500);
+			super_duper_usleep(100);
 			if (!are_all_philos_full(monitor))
 				return (NULL);
 			if (time_elapsed_since_last_meal(monitor->main->philo[i]) >= \
-				monitor->main->philo[i]->args->t_to_die && \
-				are_all_philos_full(monitor))
+				monitor->main->philo[i]->args->t_to_die)
 			{
 				set_bool(&monitor->main->mutex->status, \
 				&monitor->main->philo[i]->args->someone_died, true);

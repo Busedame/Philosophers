@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:01:58 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/10/02 15:45:41 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/10/02 16:17:02 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	super_duper_usleep(long duration)
 
 	timestamp = get_current_time();
 	while (get_current_time() - timestamp < duration)
-		usleep(duration);
+		usleep(duration / 10);
 }
 
 /*Checks if any philosopher died. The someone_died bool is set by the
